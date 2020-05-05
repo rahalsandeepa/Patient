@@ -28,14 +28,20 @@
 					Last name:<input id="lName" name="P_lname" type="text"
 						class="form-control form-control-sm"> <br>
 					
-					<div class="input-group input-group-sm mb-3">
+					<!-- <div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="P_gender">Gender: </span>
 						</div>
 						&nbsp;&nbsp;Male <input type="radio" id="gender"
 							name="P_gender" value="Male"> &nbsp;&nbsp;Female <input
 							type="radio" id="gender" name="P_gender" value="Female">
-					</div>
+					</div>-->
+					
+					<select class="form-control" id="gender" name ="P_gender">
+									<option value="0">choose....</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+								</select>
 
 					
 					Age: <input id="age" name="P_age" type="text"

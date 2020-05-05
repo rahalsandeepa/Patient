@@ -85,7 +85,7 @@ public class Patient {
 		   {return "Error while connecting to the database for reading."; } 
 		 
 		   // Prepare the html table to be displayed    
-		   output = "<table border=\"1\"><tr><th>Patient ID</th><th>Patient Fname</th><th>Patient Lname</th><th>"
+		   output = "<table border=\"1\"><th><th>Patient Fname</th><th>Patient Lname</th><th>"
 		   		+ "Patient Gender</th><th>Patient Age</th><th>Patient NIC</th><th>Patient Address"
 		   		+ "</th><th>Patient Email</th><th>Patient Password</th><th>Patient PhoneNo</th><th>Update</th>"
 		   		+ "<th>Remove</th></tr>"; 
@@ -112,7 +112,7 @@ public class Patient {
 		  
 		   
 		    // Add into the html table
-			   	output += "<tr><td>" + P_Id + "</td>"; 
+			   	output += "<tr><td><input id='hidPatientIdUpdate'name='hidPatientIdUpdate' type='hidden' value='"+P_Id+"'>" + P_Id + "</td>";
 		   		output += "<td>" + P_fname + "</td>";     
 		   		output += "<td>" + P_lname + "</td>";    
 		   		output += "<td>" + P_gender + "</td>";     
@@ -124,13 +124,15 @@ public class Patient {
 		   		output += "<td>" + P_phoneNo + "</td>";
 		 
 		    // buttons     
-		   		output += "<td><input name=\"btnUpdate\" type=\"button\" "
+		   		/*output += "<td><input name=\"btnUpdate\" type=\"button\" "
 		   				+ "value=\"Update\" class=\"btn btn-secondary\"></td>"      
 		   				+ "<td><form method=\"post\" action=\"Patient.jsp\">"      
 		   				+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"     "
 		   				+ " class=\"btn btn-danger\">"      
 		   				+ "<input name=\"hidpatientIdDelet\" type=\"hidden\" value=\"" + P_Id      
-		   				+ "\">" + "</form></td></tr>";    
+		   				+ "\">" + "</form></td></tr>";*/ 
+		   		output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td> "
+						+ "<td><button name='btnRemove' type='button' value='"+ P_Id + "' class='btnRemove btn btn-danger'  data-ID= '" + P_Id + "'>remove</button></td></tr>";
 		   }
 	  
 	 // Connection con;
@@ -145,7 +147,7 @@ public class Patient {
 }
 
 	//--------------------------Update ---------------------
-/*
+
 	public String updatePatient(String P_Id, String P_fname, String P_lname, String P_gender, String P_age, String P_patientNIC, String P_address, String P_email, String P_password, String P_phoneNo ) {
 		String output = "";
 		try {
@@ -206,14 +208,18 @@ public class Patient {
 
 
 			// execute the statement
-			preparedStmt.execute();
-			con.close();
-
-			output = "Deleted successfully";
-		} catch (Exception e) {
-			output = "Error while deleting the item.";
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}*/
+						preparedStmt.execute();
+						con.close();
+						
+						String newDoctor = readPatient();
+						output = "{\"status\":\"success\"}"; 
+						 
+					} catch (Exception e) {
+						output = "{\"status\":\"error\", \"data\": "
+								+ "\"Error while deleting the Patient.\"}"; 
+						output = "Error while deleting the Patient Details.";	
+						System.err.println(e.getMessage());
+					}
+					return output;
+	}
 }

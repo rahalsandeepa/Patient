@@ -43,9 +43,15 @@ public class PatientAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String output = patientObj.AddPatient(request.getParameter("P_fname"), request.getParameter("P_lname"),
-				request.getParameter("P_gender"), request.getParameter("P_age"), request.getParameter("P_patientNIC"),
-				request.getParameter("P_address"), request.getParameter("P_email"),request.getParameter("P_password"),
+		String output = patientObj.AddPatient(
+				request.getParameter("P_fname"), 
+				request.getParameter("P_lname"),
+				request.getParameter("P_gender"), 
+				request.getParameter("P_age"), 
+				request.getParameter("P_patientNIC"),
+				request.getParameter("P_address"), 
+				request.getParameter("P_email"),
+				request.getParameter("P_password"),
 				request.getParameter("P_phoneNo"));
 
 		response.getWriter().write(output);
@@ -74,6 +80,20 @@ public class PatientAPI extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Map paras = getParasMap(request);
+		//System.out.println(paras);
+				String output = patientObj.updatePatient(paras.get("hidPatientIDSave").toString(), 
+						paras.get("P_fname").toString(),
+						paras.get("P_lname").toString(), 
+						paras.get("P_gender").toString(), 
+						paras.get("P_age").toString(),
+						paras.get("P_patientNIC").toString(), 
+						paras.get("P_address").toString(),
+						paras.get("P_email").toString(),
+						paras.get("P_password").toString(),
+						paras.get("P_phoneNo").toString());
+
+				response.getWriter().write(output);
 	}
 
 	/**
@@ -81,6 +101,9 @@ public class PatientAPI extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Map paras = getParasMap(request);
+		String output = patientObj.deletePatient(paras.get("P_Id").toString());
+		response.getWriter().write(output);
 	}
 
 }

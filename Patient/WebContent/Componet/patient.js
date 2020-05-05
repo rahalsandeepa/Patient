@@ -57,8 +57,68 @@ function onPatientSaveComplete(response, status) {
 	$("#P_Id")[0].reset();
 }
 
+//UPDATE==========================================
+$(document).on("click", ".btnUpdate", function(event)
+		{
+			$("#hidPatientIDSave").val($(this).closest("tr").find('td:eq(0)').text());
+			$("#fNmae").val($(this).closest("tr").find('td:eq(1)').text());
+			$("#lName").val($(this).closest("tr").find('td:eq(2)').text());
+			$("#gender").val($(this).closest("tr").find('td:eq(3)').text());
+			$("#age").val($(this).closest("tr").find('td:eq(4)').text());
+			$("#patientNIC").val($(this).closest("tr").find('td:eq(5)').text());
+			$("#address").val($(this).closest("tr").find('td:eq(6)').text());
+			$("#patientEmail").val($(this).closest("tr").find('td:eq(7)').text());
+			$("#passwod").val($(this).closest("tr").find('td:eq(8)').text());
+			$("#phoneNumber").val($(this).closest("tr").find('td:eq(9)').text());
+
+		});
 
 
+//Remove
+$(document).on("click", ".btnRemove", function(event)
+		{
+		 	$.ajax(
+		{
+			url : "PatientAPI",
+			type : "DELETE",
+			data : "P_Id=" + $(this).val(),
+			dataType : "text",
+			complete : function(response, status)
+			{
+				onPaymentDeleteComplete(response.responseText, status);
+			}
+		 });
+		});
+
+
+	function onPatientDeleteComplete(response, status)
+	{
+		if (status == "success")
+	{
+			var resultSet = JSON.parse(response);
+			if (resultSet.status.trim() == "success")
+	{
+			$("#alertSuccess").text("Successfully deleted.");
+			$("#alertSuccess").show();
+			$("#divPatientGrid").html(resultSet.data);
+	} 
+	else if (resultSet.status.trim() == "error")
+	{
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+	}
+	}
+	else if (status == "error")
+	{
+		$("#alertError").text("Error while deleting.");
+		$("#alertError").show();
+	} 
+	else
+	{
+		$("#alertError").text("Unknown error while deleting..");
+		$("#alertError").show();
+	}
+}
 // CLIENT-MODEL================================================================
 function validatePatientForm() {
 	// First name
@@ -102,67 +162,4 @@ function validatePatientForm() {
 	return true;
 }
 
-// UPDATE==========================================
-	$(document).on("click", ".btnUpdate", function(event)
-			{
-				$("#hidPatientIDSave").val($(this).closest("tr").find('#hidPatientIDSave').val());
-				$("#fNmae").val($(this).closest("tr").find('td:eq(0)').text());
-				$("#lName").val($(this).closest("tr").find('td:eq(1)').text());
-				$("#gender").val($(this).closest("tr").find('td:eq(2)').text());
-				$("#age").val($(this).closest("tr").find('td:eq(3)').text());
-				$("#patientNIC").val($(this).closest("tr").find('td:eq(4)').text());
-				$("#address").val($(this).closest("tr").find('td:eq(5)').text());
-				$("#patientEmail").val($(this).closest("tr").find('td:eq(6)').text());
-				$("#passwod").val($(this).closest("tr").find('td:eq(7)').text());
-				$("#phoneNumber").val($(this).closest("tr").find('td:eq(7)').text());
 
-			});
-
-/*	
-	//Remove
-	$(document).on("click", ".btnRemove", function(event)
-			{
-		
-		$.ajax({
-			url : "DoctorAPI",
-			type : type,
-			data : $("#doctorFome").serialize(),
-			dataType : "text",
-			complete : function(response, status) {
-				console.log(response)
-				onDoctorDeleteComplete(response.responseText, status);
-			}
-		
-		});
-	});
-
-	
-		function onDoctorDeleteComplete(response, status)
-		{
-			if (status == "success")
-		{
-				var resultSet = JSON.parse(response);
-				if (resultSet.status.trim() == "success")
-		{
-				$("#alertSuccess").text("Successfully deleted.");
-				$("#alertSuccess").show();
-				$("#hidDoctorIDSave").html(resultSet.data);
-		} 
-		else if (resultSet.status.trim() == "error")
-		{
-				$("#alertError").text(resultSet.data);
-				$("#alertError").show();
-		}
-		}
-		else if (status == "error")
-		{
-			$("#alertError").text("Error while deleting.");
-			$("#alertError").show();
-		} 
-		else
-		{
-			$("#alertError").text("Unknown error while deleting..");
-			$("#alertError").show();
-		}
-	
-		}*/
