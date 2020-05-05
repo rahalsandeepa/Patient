@@ -22,7 +22,7 @@ import com.google.gson.*;
 import org.jsoup.*;
 import org.jsoup.parser.*;
 import org.jsoup.nodes.Document;
-
+/*
 @Path("/Patients")
 public class PatientService {
 	Patient patientObj = new Patient();
@@ -101,4 +101,4 @@ public class PatientService {
 		return output;
 	}
 
-}
+}*/

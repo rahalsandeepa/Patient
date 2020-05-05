@@ -28,8 +28,8 @@ public class Patient {
 
 	//---------------------------Insert--------------------
 
-	public String AddPatient(String P_fname, String P_lname, String P_gender, int P_age, String P_patientNIC,
-			String P_address, String P_email, String P_password , int P_phoneNo) {
+	public String AddPatient(String P_fname, String P_lname, String P_gender, String P_age, String P_patientNIC,
+			String P_address, String P_email, String P_password , String P_phoneNo) {
 		String output = "";
 
 		try {
@@ -50,22 +50,26 @@ public class Patient {
 			preparedStmt.setString(1, P_fname);
 			preparedStmt.setString(2, P_lname);
 			preparedStmt.setString(3, P_gender);
-			preparedStmt.setInt(4, P_age);
+			preparedStmt.setString(4, P_age);
 			preparedStmt.setString(5, P_patientNIC);
 			preparedStmt.setString(6, P_address);
 			preparedStmt.setString(7, P_email);
 			preparedStmt.setString(8, P_password);
-			preparedStmt.setInt(9, P_phoneNo);
+			preparedStmt.setString(9, P_phoneNo);
 
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
+			
+			String newpatient = readPatient();
+			output = "{\"status\":\"success\"}"; 
+			 
 		} catch (Exception e) {
-			output = "Error while inserting the patient.";
+			output = "{\"status\":\"error\", \"data\": "
+					+ "\"Error while inserting the Patient.\"}"; 
+			output = "Error while inserting the Patient Details.";	
 			System.err.println(e.getMessage());
 		}
-
 		return output;
 	}
 
@@ -120,11 +124,12 @@ public class Patient {
 		   		output += "<td>" + P_phoneNo + "</td>";
 		 
 		    // buttons     
-		   		output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"      
+		   		output += "<td><input name=\"btnUpdate\" type=\"button\" "
+		   				+ "value=\"Update\" class=\"btn btn-secondary\"></td>"      
 		   				+ "<td><form method=\"post\" action=\"Patient.jsp\">"      
 		   				+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"     "
 		   				+ " class=\"btn btn-danger\">"      
-		   				+ "<input name=\"patientId\" type=\"hidden\" value=\"" + P_Id      
+		   				+ "<input name=\"hidpatientIdDelet\" type=\"hidden\" value=\"" + P_Id      
 		   				+ "\">" + "</form></td></tr>";    
 		   }
 	  
@@ -140,7 +145,7 @@ public class Patient {
 }
 
 	//--------------------------Update ---------------------
-
+/*
 	public String updatePatient(String P_Id, String P_fname, String P_lname, String P_gender, String P_age, String P_patientNIC, String P_address, String P_email, String P_password, String P_phoneNo ) {
 		String output = "";
 		try {
@@ -210,5 +215,5 @@ public class Patient {
 			System.err.println(e.getMessage());
 		}
 		return output;
-	}
+	}*/
 }
