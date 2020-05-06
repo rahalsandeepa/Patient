@@ -178,7 +178,9 @@ public class Patient {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			String newDoctor = readPatient();
+			output = "{\"status\":\"success\"}"; 
+			 
 		} catch (Exception e) {
 			output = "Error while updating the item.";
 			System.err.println(e.getMessage());
@@ -212,7 +214,7 @@ public class Patient {
 						con.close();
 						
 						String newDoctor = readPatient();
-						output = "{\"status\":\"success\"}"; 
+						output = "{\"status\":\"success\"}";
 						 
 					} catch (Exception e) {
 						output = "{\"status\":\"error\", \"data\": "

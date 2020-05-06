@@ -85,7 +85,7 @@ $(document).on("click", ".btnRemove", function(event)
 			dataType : "text",
 			complete : function(response, status)
 			{
-				onPaymentDeleteComplete(response.responseText, status);
+				onPatientDeleteComplete(response.responseText, status);
 			}
 		 });
 		});
